@@ -1,5 +1,6 @@
+// src/ App.tsx
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+
 import {
   Alert,
   Box,
@@ -27,45 +28,42 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { analyzeQuestion, type AnalyzeResponse } from "./api";
-import { useAnalystStore } from "./store";
+
+import { useAnalystStore } from "./store/store";
+
 // ===============================================
 // Import - Custom components
 // ===============================================
 import PromptUI from "./components/PromptUI/PromptUI";
 import Test from "./components/Test"
 
-const examples = [
-  "Show the top 10 customers by revenue this year.",
-  "Compare total revenue by region this year.",
-  "Show monthly revenue for this year.",
-  "Which products have the highest sales?",
-];
+// const examples = [
+//   "Show the top 10 customers by revenue this year.",
+//   "Compare total revenue by region this year.",
+//   "Show monthly revenue for this year.",
+//   "Which products have the highest sales?",
+// ];
 
 export default function App() {
-  const [question, setQuestion] = useState(examples[0]);
+  // const [question, setQuestion] = useState(examples[0]);
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
+
+
+  const question = useAnalystStore((state) => state.question);
+  const setQuestion = useAnalystStore((state) => state.setQuestion);
+
   const { history, addHistory, clearHistory } = useAnalystStore();
 
-  const mutation = useMutation({
-    mutationFn: analyzeQuestion,
-    onSuccess: (data) => {
-      setResult(data);
-      addHistory(data);
-    },
-  });
 
-  const run = () => {
-    if (question.trim()) mutation.mutate(question.trim());
-  };
+
 
   const columns: GridColDef[] = result
     ? result.columns.map((field) => ({
-        field,
-        headerName: field.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-        flex: 1,
-        minWidth: 140,
-      }))
+      field,
+      headerName: field.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      flex: 1,
+      minWidth: 140,
+    }))
     : [];
 
   const rows = result
@@ -74,12 +72,12 @@ export default function App() {
 
   const chartData = result
     ? result.rows.slice(0, 10).map((row) => {
-        const values = Object.values(row);
-        return {
-          name: String(values[0] ?? ""),
-          value: Number(values[values.length - 1] ?? 0),
-        };
-      })
+      const values = Object.values(row);
+      return {
+        name: String(values[0] ?? ""),
+        value: Number(values[values.length - 1] ?? 0),
+      };
+    })
     : [];
 
   return (
@@ -99,8 +97,8 @@ export default function App() {
           </Typography>
         </Box>
 
-<Test/>
-     <PromptUI/>
+
+        <PromptUI />
 
         {result && (
           <>
