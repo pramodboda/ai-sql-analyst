@@ -31,22 +31,16 @@ The system generates SQL, validates it through a SQL safety layer, executes the 
 ## 🏗️ Architecture
 
 ```text
-React + TypeScript
-       │
-       │ REST API
-       ▼
-FastAPI
- ├── API Layer
- ├── Service Layer
- ├── AI Service
- ├── SQL Safety Layer
- └── Database Layer
-       │
-       ├──────────────► Gemini API
-       │
-       └──────────────► Neon PostgreSQL
-                         │
-                         └── Read-only user
+React + TypeScript + MUI
+          |
+          | REST
+          v
+       FastAPI
+   +------+------+----------------+
+   |             |                |
+ AI Service   SQL Safety      Database
+   |             |                |
+Gemini/Groq   SQLGlot       Neon PostgreSQL
 ```
 
 The LLM never directly accesses the database.
