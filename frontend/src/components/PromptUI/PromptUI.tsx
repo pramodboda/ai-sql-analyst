@@ -81,7 +81,8 @@ export default function PromptUI() {
           {mutation.isPending ? "Analyzing..." : "Analyze"}
         </Button>
         <Box>
-          <IconButton color="secondary" aria-label="Analyze">
+          <IconButton color="primary" variant="contained" aria-label="Analyze" onClick={run}
+            disabled={mutation.isPending || !question.trim()}>
             <ArrowUpwardSharpIcon />
           </IconButton>
 
