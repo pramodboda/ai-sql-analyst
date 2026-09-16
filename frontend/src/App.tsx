@@ -33,6 +33,7 @@ import { useAnalystStore } from "./store";
 // Import - Custom components
 // ===============================================
 import PromptUI from "./components/PromptUI/PromptUI";
+import Test from "./components/Test"
 
 const examples = [
   "Show the top 10 customers by revenue this year.",
@@ -98,6 +99,7 @@ export default function App() {
           </Typography>
         </Box>
 
+<Test/>
      <PromptUI/>
 
         {result && (
