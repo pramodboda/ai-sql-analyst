@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import Fab from '@mui/material/Fab';
 
 import ArrowUpwardSharpIcon from '@mui/icons-material/ArrowUpwardSharp';
 
@@ -61,10 +62,12 @@ export default function PromptUI() {
 
             />
 
-            <IconButton aria-label="Analyze" variant="contained" onClick={run}
+
+            <Fab size="small" color="primary" aria-label="Analyze" variant="contained" onClick={run}
               disabled={mutation.isPending || !question.trim()} sx={{ position: "absolute", bottom: "5px", right: "5px" }}>
               <ArrowUpwardSharpIcon />
-            </IconButton>
+
+            </Fab>
 
             {/* <Button variant="contained" startIcon={<ArrowUpwardSharpIcon />} sx={{ position: "absolute", bottom: "5px", right: "5px" }}>
             </Button> */}
