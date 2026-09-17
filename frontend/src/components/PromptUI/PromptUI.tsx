@@ -49,14 +49,28 @@ export default function PromptUI() {
           Ask your database
         </Typography>
         <BorderBeam>
-          <TextField
-            multiline
-            minRows={3}
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Example: Show the top 10 customers by revenue this year."
-            fullWidth
-          />
+
+          <Box sx={{ position: "relative" }}>
+            <TextField
+              multiline
+              minRows={3}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              placeholder="Example: Show the top 10 customers by revenue this year."
+              fullWidth
+
+            />
+
+            <IconButton aria-label="Analyze" variant="contained" onClick={run}
+              disabled={mutation.isPending || !question.trim()} sx={{ position: "absolute", bottom: "5px", right: "5px" }}>
+              <ArrowUpwardSharpIcon />
+            </IconButton>
+
+            {/* <Button variant="contained" startIcon={<ArrowUpwardSharpIcon />} sx={{ position: "absolute", bottom: "5px", right: "5px" }}>
+            </Button> */}
+
+          </Box>
+
         </BorderBeam>
 
 
@@ -70,7 +84,7 @@ export default function PromptUI() {
             />
           ))}
         </Stack>
-
+        {/* 
         <Button
           variant="contained"
           size="large"
@@ -79,14 +93,8 @@ export default function PromptUI() {
 
         >
           {mutation.isPending ? "Analyzing..." : "Analyze"}
-        </Button>
-        <Box>
-          <IconButton color="primary" variant="contained" aria-label="Analyze" onClick={run}
-            disabled={mutation.isPending || !question.trim()}>
-            <ArrowUpwardSharpIcon />
-          </IconButton>
+        </Button> */}
 
-        </Box>
 
         {mutation.isError && (
           <Alert severity="error">
@@ -95,7 +103,7 @@ export default function PromptUI() {
           </Alert>
         )}
       </Stack>
-    </Paper>
+    </Paper >
 
   );
 }
